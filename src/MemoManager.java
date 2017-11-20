@@ -82,11 +82,17 @@ public class MemoManager extends Menu {
 	
 	private void listMemo() {
     	for (int i=0; i<memoList.size(); i++)
-    		System.out.println(memoList.get(i));
+    		System.out.println("["+(i+1)+"]"+memoList.get(i)+"\n");
 	}
 	
 	private void updateMemo() {
-		
+		Scanner scan = new Scanner(System.in);				
+		System.out.print("수정할 메모의 번호: ");
+		int id = scan.nextInt()-1;
+		System.out.print("수정할 내용: ");
+		String content = scan.nextLine();
+		memoList.set(id, content);
+		isModified = true;
 	}
 	
 	private void deleteMemo() {
