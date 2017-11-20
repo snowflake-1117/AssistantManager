@@ -12,9 +12,10 @@ public class AssistantManager extends Menu {
 	public void showAndSelect() {
 		int choice=-1;
 		Scanner scanner = new Scanner(System.in);
-
-		printMenu();
-		while (choice != 5) {
+		
+		while (choice != 4) {
+			printMenu();
+			System.out.print("ют╥б: ");
 			choice = scanner.nextInt();
 			
 			switch (choice) {
