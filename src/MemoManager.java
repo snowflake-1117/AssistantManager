@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class MemoManager extends Menu {
 	private ArrayList<String> memoList = new ArrayList<String>();
 	private static final String FILENAME = "memoManager.txt";
-	private boolean isModified=true;
+	private boolean isModified = false;
 	
 	public void showAndSelect() {
 		Scanner scan = new Scanner(System.in);
@@ -89,6 +89,7 @@ public class MemoManager extends Menu {
 		Scanner scan = new Scanner(System.in);				
 		System.out.print("수정할 메모의 번호: ");
 		int id = scan.nextInt()-1;
+		scan.nextLine();
 		System.out.print("수정할 내용: ");
 		String content = scan.nextLine();
 		memoList.set(id, content);

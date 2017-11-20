@@ -12,7 +12,7 @@ public class AssistantManager extends Menu {
 		int choice=-1;
 		Scanner scanner = new Scanner(System.in);
 
-		while (choice != 5) {
+		while (choice != 4) {
 			printMenu();
 			System.out.print("ют╥б: ");
 			choice = scanner.nextInt();
