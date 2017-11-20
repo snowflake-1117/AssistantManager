@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class MemoManager {
+public class MemoManager extends Menu {
 	
 	public void showAndSelect() {
 		Scanner scan = new Scanner(System.in);
@@ -9,16 +9,36 @@ public class MemoManager {
 			printMenu();
 			switch (n) {
 			case 1:
+				createMemo();
 				break;
 			case 2:
+				listMemo();
 				break;
 			case 3:
+				updateMemo();
 				break;
 			case 4:
+				deleteMemo();
 				break;
 			}
 		} while (n != 5);
   }
+	
+	private void createMemo() {
+		
+	}
+	
+	private void listMemo() {
+		
+	}
+	
+	private void updateMemo() {
+		
+	}
+	
+	private void deleteMemo() {
+		
+	}
 
 	protected void printMenu() {
 		System.out.println("1. 메모 생성");
