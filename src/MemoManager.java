@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,13 +46,13 @@ public class MemoManager extends Menu {
 			initializeList();
 		}
 		catch (IOException e) {
-			;
+			File file = new File(FILENAME);
 		}
 	}
 	
 	private void initializeList() throws IOException {
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(FILENAME));		
 		while (true) {
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(FILENAME));
 			String line = bufferedReader.readLine();
 			if (line == null)
 				break;
@@ -61,7 +62,7 @@ public class MemoManager extends Menu {
 	
 	private void addMemo() {
 		Scanner scan = new Scanner(System.in);		
-		System.out.print("메모 입력: ");
+		System.out.print("메모 추가: ");
 		String memo = scan.nextLine();
 		memoList.add(memo);		
 		isModified = true;
@@ -80,7 +81,8 @@ public class MemoManager extends Menu {
 	}
 	
 	private void listMemo() {
-		
+    	for (int i=0; i<memoList.size(); i++)
+    		System.out.println(memoList.get(i));
 	}
 	
 	private void updateMemo() {
@@ -92,7 +94,7 @@ public class MemoManager extends Menu {
 	}
 
 	protected void printMenu() {
-		System.out.println("1. 메모 생성");
+		System.out.println("1. 메모 추가");
 		System.out.println("2. 메모 리스트");
 		System.out.println("3. 메모 수정");
 		System.out.println("4. 메모 삭제");
