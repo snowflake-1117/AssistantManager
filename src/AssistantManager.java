@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class AssistantManager extends Menu {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		AssistantManager manager = new AssistantManager();
 		manager.showAndSelect();
 	}
@@ -12,9 +11,8 @@ public class AssistantManager extends Menu {
 	public void showAndSelect() {
 		int choice=-1;
 		Scanner scanner = new Scanner(System.in);
-		
+
 		while (choice != 4) {
-			printMenu();
 			System.out.print("ют╥б: ");
 			choice = scanner.nextInt();
 			
@@ -22,6 +20,8 @@ public class AssistantManager extends Menu {
 				case 1:
 					break;
 				case 2:
+					MemoManager memo = new MemoManager();
+					memo.showAndSelect();
 					break;
 				case 3:
 					break;
