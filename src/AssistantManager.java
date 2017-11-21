@@ -13,8 +13,7 @@ public class AssistantManager extends Menu {
 		Scanner scanner = new Scanner(System.in);
 
 		while (choice != 4) {
-            printMenu();
-
+			printMenu();
 			System.out.print("ют╥б: ");
 			choice = scanner.nextInt();
 			
@@ -26,6 +25,8 @@ public class AssistantManager extends Menu {
 					memo.showAndSelect();
 					break;
 				case 3:
+					AccountManager account = new AccountManager();
+					account.showAndSelect();
 					break;
 				case 4:
 					break;
