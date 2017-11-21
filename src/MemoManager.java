@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -46,7 +45,7 @@ public class MemoManager extends Menu {
 			initializeList();
 		}
 		catch (IOException e) {
-			File file = new File(FILENAME);
+			return;
 		}
 	}
 	
@@ -66,6 +65,7 @@ public class MemoManager extends Menu {
 		String memo = scan.nextLine();
 		memoList.add(memo);		
 		isModified = true;
+		setNewline();
 	}
 	
 	private void writeMemoFile() {
@@ -81,8 +81,13 @@ public class MemoManager extends Menu {
 	}
 	
 	private void listMemo() {
+		if (memoList.size()<1) {
+			System.out.println("메모장이 비어 있습니다");
+			return;
+		}
     	for (int i=0; i<memoList.size(); i++)
-    		System.out.println("["+(i+1)+"]"+memoList.get(i)+"\n");
+    		System.out.println("["+(i+1)+"] "+memoList.get(i));
+		setNewline();
 	}
 	
 	private void updateMemo() {
@@ -94,10 +99,16 @@ public class MemoManager extends Menu {
 		String content = scan.nextLine();
 		memoList.set(id, content);
 		isModified = true;
+		setNewline();
 	}
 	
 	private void deleteMemo() {
-		
+		Scanner scan = new Scanner(System.in);				
+		System.out.print("삭제할 메모의 번호: ");
+		int id = scan.nextInt()-1;
+		memoList.remove(id);
+		isModified = true;
+		setNewline();
 	}
 
 	protected void printMenu() {
@@ -106,5 +117,9 @@ public class MemoManager extends Menu {
 		System.out.println("3. 메모 수정");
 		System.out.println("4. 메모 삭제");
 		System.out.println("5. 뒤로가기");
+	}
+	
+	private void setNewline() {
+		System.out.println("");
 	}
 }
