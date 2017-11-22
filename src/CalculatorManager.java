@@ -6,7 +6,7 @@ public class CalculatorManager extends Menu {
         int choice = -1;
         Scanner scanner = new Scanner(System.in);
 
-        while (choice != 4) {
+        while (choice != 3) {
             printMenu();
             choice = scanner.nextInt();
 
