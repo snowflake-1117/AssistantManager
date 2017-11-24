@@ -41,10 +41,19 @@ public class CalculatorManager extends Menu {
             return "0";
         }
 
+        double result = 0;
+        result = calculateByOperators(numericalExpression, result);
+
+        final String DECIMAL_FORMAT = "#.######";
+        DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT);
+
+        return decimalFormat.format(result);
+    }
+
+    private double calculateByOperators(String numericalExpression, double result) {
         Stack<Double> stackForCalculate = new Stack<>();
         StringTokenizer number = new StringTokenizer(numericalExpression, "+-/* ");
         StringTokenizer operator = new StringTokenizer(numericalExpression, "1234567890. ");
-        double result = 0;
 
         stackForCalculate.push(Double.parseDouble(number.nextToken()));
         while (number.hasMoreTokens()) {
@@ -75,10 +84,7 @@ public class CalculatorManager extends Menu {
             result += stackForCalculate.pop();
         }
 
-        final String DECIMAL_FORMAT = "#.######";
-        DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT);
-
-        return decimalFormat.format(result);
+        return result;
     }
 
     @Override
