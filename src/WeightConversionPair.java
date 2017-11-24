@@ -5,7 +5,7 @@ public class WeightConversionPair extends ConversionPair {
     protected void printMenu() {
         System.out.println("1. pound -> kg");
         System.out.println("2. kg -> pound");
-        System.out.print("ÀÔ·Â: ");
+        System.out.print("ì…ë ¥: ");
     }
 
     @Override
@@ -15,11 +15,11 @@ public class WeightConversionPair extends ConversionPair {
         Scanner scanner = new Scanner(System.in);
 
         if (isConversionFromPoundToKg) {
-            System.out.print("º¯È¯ÇÒ pound °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+            System.out.print("ë³€í™˜í•  pound ê°’ì„ ì…ë ¥í•˜ì„¸ìš”: ");
             inputNumber = scanner.nextDouble();
             result = inputNumber * 0.45392 + " kg";
         } else {
-            System.out.print("º¯È¯ÇÒ kg °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+            System.out.print("ë³€í™˜í•  kg ê°’ì„ ì…ë ¥í•˜ì„¸ìš”: ");
             inputNumber = scanner.nextDouble();
             result = inputNumber * 2.20462 + " pound";
         }

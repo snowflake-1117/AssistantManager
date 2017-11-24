@@ -17,10 +17,10 @@ public class CalculatorManager extends Menu {
             switch (choice) {
                 case 1:
                     scanner.nextLine();// Prevent to skip Numerical expression input
-                    System.out.print("¼ö½Ä ÀÔ·Â: ");
+                    System.out.print("ìˆ˜ì‹ ì…ë ¥: ");
                     String numericalExpression = scanner.nextLine();
                     String result = calculate(numericalExpression);
-                    System.out.println("´ä: " + result);
+                    System.out.println("ë‹µ: " + result);
                     break;
                 case 2:
                     UnitConversionManager unitConversionManager = new UnitConversionManager();
@@ -29,7 +29,7 @@ public class CalculatorManager extends Menu {
                 case 3:
                     break;
                 default:
-                    String wrongInput = "Àß¸øµÈ ÀÔ·Â °ª ÀÔ´Ï´Ù.";
+                    String wrongInput = "ì˜ëª»ëœ ì…ë ¥ ê°’ ì…ë‹ˆë‹¤.";
                     System.out.println(wrongInput);
                     break;
             }
@@ -89,9 +89,9 @@ public class CalculatorManager extends Menu {
 
     @Override
     protected void printMenu() {
-        System.out.println("1. °è»ê±â");
-        System.out.println("2. ´ÜÀ§º¯È¯");
-        System.out.println("3. µÚ·Î°¡±â");
-        System.out.print("ÀÔ·Â: ");
+        System.out.println("1. ê³„ì‚°ê¸°");
+        System.out.println("2. ë‹¨ìœ„ë³€í™˜");
+        System.out.println("3. ë’¤ë¡œê°€ê¸°");
+        System.out.print("ì…ë ¥: ");
     }
 }

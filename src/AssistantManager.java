@@ -15,7 +15,7 @@ public class AssistantManager extends Menu {
 		while (choice != 4) {
             printMenu();
 
-			System.out.print("ÀÔ·Â: ");
+			System.out.print("ìž…ë ¥: ");
 			choice = scanner.nextInt();
 			
 			switch (choice) {
@@ -40,9 +40,9 @@ public class AssistantManager extends Menu {
 	
 	@Override
 	protected void printMenu() {
-		System.out.println("1.°è»ê±â ");
-		System.out.println("2.¸Þ¸ðÀå ");
-		System.out.println("3.°¡°èºÎ ");
-		System.out.println("4.Á¾·á");
+		System.out.println("1.ê³„ì‚°ê¸° ");
+		System.out.println("2.ë©”ëª¨ìž¥ ");
+		System.out.println("3.ê°€ê³„ë¶€ ");
+		System.out.println("4.ì¢…ë£Œ");
 	}
 }

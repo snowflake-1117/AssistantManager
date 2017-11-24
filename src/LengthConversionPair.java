@@ -5,7 +5,7 @@ public class LengthConversionPair extends ConversionPair {
     protected void printMenu() {
         System.out.println("1. inch -> cm");
         System.out.println("2. cm -> inch");
-        System.out.print("ÀÔ·Â: ");
+        System.out.print("ì…ë ¥: ");
     }
 
     @Override
@@ -15,11 +15,11 @@ public class LengthConversionPair extends ConversionPair {
         Scanner scanner = new Scanner(System.in);
 
         if (isConversionFromInchToCm) {
-            System.out.print("º¯È¯ÇÒ inch °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+            System.out.print("ë³€í™˜í•  inch ê°’ì„ ì…ë ¥í•˜ì„¸ìš”: ");
             inputNumber = scanner.nextDouble();
             result = inputNumber * 2.54 + " cm";
         } else {
-            System.out.print("º¯È¯ÇÒ cm °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+            System.out.print("ë³€í™˜í•  cm ê°’ì„ ì…ë ¥í•˜ì„¸ìš”: ");
             inputNumber = scanner.nextDouble();
             result = inputNumber * 0.393701 + " inch";
         }

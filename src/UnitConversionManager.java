@@ -40,5 +40,6 @@ public class UnitConversionManager extends Menu {
         System.out.println("2. inch <-> cm");
         System.out.println("3. °F <-> °C");
         System.out.println("4. 뒤로가기");
+        System.out.print("입력: ");
     }
 }

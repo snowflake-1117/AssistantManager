@@ -13,10 +13,10 @@ abstract class ConversionPair extends Menu {
             case 1:
             case 2:
                 String result = calculateUnitConversion(isConversionFromAToB(choice));
-                System.out.println("º¯È¯ °ª: " + result);
+                System.out.println("ë³€í™˜ ê°’: " + result);
                 break;
             default:
-                String wrongInput = "Àß¸øµÈ ÀÔ·Â °ª ÀÔ´Ï´Ù.";
+                String wrongInput = "ì˜ëª»ëœ ì…ë ¥ ê°’ ì…ë‹ˆë‹¤.";
                 System.out.println(wrongInput);
                 break;
         }

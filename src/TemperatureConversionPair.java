@@ -3,9 +3,9 @@ import java.util.Scanner;
 public class TemperatureConversionPair extends ConversionPair {
     @Override
     protected void printMenu() {
-        System.out.println("1. ¡ÆF -> ¡ÆC");
-        System.out.println("2. ¡ÆC -> ¡ÆF");
-        System.out.print("ÀÔ·Â: ");
+        System.out.println("1. Â°F -> Â°C");
+        System.out.println("2. Â°C -> Â°F");
+        System.out.print("ì…ë ¥: ");
     }
 
     @Override
@@ -15,13 +15,13 @@ public class TemperatureConversionPair extends ConversionPair {
         Scanner scanner = new Scanner(System.in);
 
         if (isConversionFromFahrenheitPoundToCelsius) {
-            System.out.print("º¯È¯ÇÒ ¡ÆF °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+            System.out.print("ë³€í™˜í•  Â°F ê°’ì„ ì…ë ¥í•˜ì„¸ìš”: ");
             inputNumber = scanner.nextDouble();
-            result = (inputNumber - 32) / 1.8 + " ¡ÆC";
+            result = (inputNumber - 32) / 1.8 + " Â°C";
         } else {
-            System.out.print("º¯È¯ÇÒ ¡ÆC °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+            System.out.print("ë³€í™˜í•  Â°C ê°’ì„ ì…ë ¥í•˜ì„¸ìš”: ");
             inputNumber = scanner.nextDouble();
-            result = (inputNumber * 1.8 + 32) + " ¡ÆF";
+            result = (inputNumber * 1.8 + 32) + " Â°F";
         }
         return result;
     }
