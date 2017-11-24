@@ -20,6 +20,8 @@ public class AssistantManager extends Menu {
 			
 			switch (choice) {
 				case 1:
+					CalculatorManager calculator = new CalculatorManager();
+					calculator.showAndSelect();
 					break;
 				case 2:
 					MemoManager memo = new MemoManager();
