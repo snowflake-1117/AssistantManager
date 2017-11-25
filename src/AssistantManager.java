@@ -16,7 +16,7 @@ public class AssistantManager extends Menu {
 			printMenu();
 			System.out.print("ют╥б: ");
 			choice = scanner.nextInt();
-			
+			scanner.nextLine();
 			switch (choice) {
 				case 1:
 					break;
@@ -29,12 +29,11 @@ public class AssistantManager extends Menu {
 					account.showAndSelect();
 					break;
 				case 4:
-					break;
-				default:
-					scanner.close();
+					default:
 					break;
 			}
 		}
+		scanner.close();
 	}
 	
 	@Override
