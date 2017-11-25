@@ -37,7 +37,6 @@ public class AccountManager extends Menu {
 		int choice = -1;
 		while (choice != 5) {
 			printMenu();
-
 			System.out.print("ют╥б: ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
@@ -54,11 +53,10 @@ public class AccountManager extends Menu {
 			case 4:
 				delete();
 				break;
-			default:
+			case 5: default:
 				break;
 			}
 		}
-		scanner.close();
 	}
 
 	private void setup() {
