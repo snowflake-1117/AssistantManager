@@ -88,8 +88,12 @@ public class AccountManager extends Menu {
 	}
 
 	private void getDate() {
-		System.out.print("날짜:");
-		record.date = scanner.nextLine();
+		System.out.print("날짜(yyyy.mm.dd):");
+		String dateInput = scanner.nextLine();
+		if(dateInput.matches("^\\d{4}.\\d{2}.\\d{2}"))
+			record.date = dateInput;
+		else
+			record.date = "0000.00.00";
 	}
 
 	private void getName() {
