@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,23 +11,17 @@ import java.util.Vector;
 
 public class AccountManager extends Menu {
 	private static final String FILENAME = "Accounts.txt";
-	Scanner scanner;
+	private Scanner scanner;
 	private Vector<Record> collection = new Vector<Record>();
-	FileInputStream fis;
-	ObjectInputStream ois;
-	FileOutputStream fos;
-	ObjectOutputStream oos;
-	int id;
-	int choice = -1;
-	String date;
-	String name;
-	String price;
+	private Record record;
 
 	@Override
 	public void showAndSelect() {
 		scanner = new Scanner(System.in);
 		setup();
 		run();
+		tearDown();
+
 	}
 
 	@Override
@@ -39,6 +34,7 @@ public class AccountManager extends Menu {
 	}
 
 	protected void run() {
+		int choice = -1;
 		while (choice != 5) {
 			printMenu();
 
@@ -56,76 +52,106 @@ public class AccountManager extends Menu {
 				update();
 				break;
 			case 4:
+				delete();
 				break;
 			default:
-				scanner.close();
-				tearDown();
 				break;
 			}
 		}
-
+		scanner.close();
 	}
 
 	private void setup() {
+		FileInputStream fis;
+		ObjectInputStream ois;
 		collection.clear();
+
 		try {
 			fis = new FileInputStream(FILENAME);
 			ois = new ObjectInputStream(fis);
 			Record temp;
-			while ((temp = (Record) ois.readObject()) != null) {// 파일 이끝나지 않았다면
-				collection.add(temp); // collection에 저장
-				ois.close();
-			}
-			fos = new FileOutputStream(FILENAME);
-			oos = new ObjectOutputStream(fos);
-		} catch (Exception ex) {
+			while ((temp = (Record) ois.readObject()) != null) // 파일 이끝나지 않았다면
+				collection.add(temp);
+			ois.close();
+			fis.close();
+		} catch (Exception e) {
+			// 처음 파일을 생성해서 아직 파일이 없다
 		}
 
 	}
 
 	private void create() {
 		System.out.println("레코드 생성");
+		record = new Record();
+		getDate();
+		getName();
+		getPrice();
+		collection.add(record);
+	}
+
+	private void getDate() {
 		System.out.print("날짜:");
-		date = scanner.nextLine();
+		record.date = scanner.nextLine();
+	}
+
+	private void getName() {
 		System.out.print("이름:");
-		name = scanner.nextLine();
+		record.name = scanner.nextLine();
+	}
+
+	private void getPrice() {
 		System.out.print("가격:");
-		price = scanner.nextLine();
-		Record temp = new Record(collection.size() + 1, date, name, price);
-		collection.add(temp);
+		record.price = scanner.nextLine();
 	}
 
 	private void print() {
 		System.out.println("레코드 출력");
 		Iterator iterator = collection.iterator();
+		int id=1;
 		while (iterator.hasNext()) {
 			Record record = (Record) iterator.next();
-			System.out.println(String.format("%3s %3s %3s %3s", record.id, record.date, record.name, record.price));
+			System.out.println(String.format("%3s %3s %3s %3s",id++, record.date, record.name, record.price));
 		}
 	}
 
 	private void update() {
-		System.out.println("레코드 수정");
 		System.out.print("수정할 레코드:");
-		id = scanner.nextInt();
-		Record record = collection.get(id-1);
-		System.out.print("날짜:");
-		record.date = scanner.nextLine();
-		System.out.print("이름:");
-		record.name = scanner.nextLine();
-		System.out.print("가격:");
-		record.price = scanner.nextLine();
+		int id = scanner.nextInt() - 1;
 		scanner.nextLine();
-		collection.remove(id-1);
-		collection.add(record);
+		record = collection.get(id);
+		collection.remove(id);
+		getDate();
+		getName();
+		getPrice();
+		collection.add(id, record);
+	}
+	private void delete() {
+		System.out.print("삭제할 레코드:");
+		int id = scanner.nextInt() - 1;
+		scanner.nextLine();
+		record = collection.get(id);
+		collection.remove(id);
 	}
 
-	private void tearDown(){
-		try{
-	      fos = new FileOutputStream(FILENAME);
-	      oos = new ObjectOutputStream(fos);
-	      for (Record record: collection) 
-	    	  oos.writeObject((Record)record);
-		}catch(Exception ex){}
+	
+	private void tearDown() {
+
+		FileOutputStream fos;
+		ObjectOutputStream oos;
+		File file = new File(FILENAME);
+		try {
+			if (!file.exists())
+				file.createNewFile();
+			fos = new FileOutputStream(FILENAME,false);
+			oos = new ObjectOutputStream(fos);
+			for (Record record : collection)
+				oos.writeObject((Record) record);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }
