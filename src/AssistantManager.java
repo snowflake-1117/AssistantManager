@@ -13,12 +13,14 @@ public class AssistantManager extends Menu {
 		Scanner scanner = new Scanner(System.in);
 
 		while (choice != 4) {
-			printMenu();
-			System.out.print("ÀÔ·Â: ");
+      printMenu();
+			System.out.print("ìž…ë ¥: ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
 			switch (choice) {
 				case 1:
+					CalculatorManager calculator = new CalculatorManager();
+					calculator.showAndSelect();
 					break;
 				case 2:
 					MemoManager memo = new MemoManager();
@@ -38,9 +40,9 @@ public class AssistantManager extends Menu {
 	
 	@Override
 	protected void printMenu() {
-		System.out.println("1.°è»ê±â ");
-		System.out.println("2.¸Þ¸ðÀå ");
-		System.out.println("3.°¡°èºÎ ");
-		System.out.println("4.Á¾·á");
+		System.out.println("1.ê³„ì‚°ê¸° ");
+		System.out.println("2.ë©”ëª¨ìž¥ ");
+		System.out.println("3.ê°€ê³„ë¶€ ");
+		System.out.println("4.ì¢…ë£Œ");
 	}
 }
