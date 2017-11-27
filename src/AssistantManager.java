@@ -13,11 +13,10 @@ public class AssistantManager extends Menu {
 		Scanner scanner = new Scanner(System.in);
 
 		while (choice != 4) {
-            printMenu();
-
+      printMenu();
 			System.out.print("입력: ");
 			choice = scanner.nextInt();
-			
+			scanner.nextLine();
 			switch (choice) {
 				case 1:
 					CalculatorManager calculator = new CalculatorManager();
@@ -28,14 +27,15 @@ public class AssistantManager extends Menu {
 					memo.showAndSelect();
 					break;
 				case 3:
+					AccountManager account = new AccountManager();
+					account.showAndSelect();
 					break;
 				case 4:
-					break;
-				default:
-					scanner.close();
+					default:
 					break;
 			}
 		}
+		scanner.close();
 	}
 	
 	@Override

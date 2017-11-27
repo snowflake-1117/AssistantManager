@@ -1,11 +1,7 @@
+import java.io.Serializable;
 
-public class Record {
-	int id;
+public class Record implements Serializable {
 	String date;
 	String name;
 	String price;
-	
-	Record(int id, String date, String name, String price) {
-		
-	}
 }
