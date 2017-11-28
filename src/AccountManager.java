@@ -53,7 +53,8 @@ public class AccountManager extends Menu {
 			case 4:
 				delete();
 				break;
-			case 5: default:
+			case 5:
+			default:
 				break;
 			}
 		}
@@ -90,7 +91,7 @@ public class AccountManager extends Menu {
 	private void getDate() {
 		System.out.print("날짜(yyyy.mm.dd):");
 		String dateInput = scanner.nextLine();
-		if(dateInput.matches("^\\d{4}.\\d{2}.\\d{2}"))
+		if (dateInput.matches("^\\d{4}.\\d{2}.\\d{2}"))
 			record.date = dateInput;
 		else
 			record.date = "0000.00.00";
@@ -109,10 +110,10 @@ public class AccountManager extends Menu {
 	private void print() {
 		System.out.println("레코드 출력");
 		Iterator iterator = collection.iterator();
-		int id=1;
+		int id = 1;
 		while (iterator.hasNext()) {
 			Record record = (Record) iterator.next();
-			System.out.println(String.format("%3s %3s %3s %3s",id++, record.date, record.name, record.price));
+			System.out.println(String.format("%3s %3s %3s %3s", id++, record.date, record.name, record.price));
 		}
 	}
 
@@ -120,22 +121,30 @@ public class AccountManager extends Menu {
 		System.out.print("수정할 레코드:");
 		int id = scanner.nextInt() - 1;
 		scanner.nextLine();
-		record = collection.get(id);
-		collection.remove(id);
-		getDate();
-		getName();
-		getPrice();
-		collection.add(id, record);
+		try {
+			record = collection.get(id);
+			collection.remove(id);
+			getDate();
+			getName();
+			getPrice();
+			collection.add(id, record);
+		} catch (Exception ex) {
+			System.out.println("해당 레코드는 존재하지 않습니다.");
+		}
 	}
+
 	private void delete() {
 		System.out.print("삭제할 레코드:");
 		int id = scanner.nextInt() - 1;
 		scanner.nextLine();
-		record = collection.get(id);
-		collection.remove(id);
+		try {
+			record = collection.get(id);
+			collection.remove(id);
+		} catch (Exception ex) {
+			System.out.println("해당 레코드는 존재하지 않습니다.");
+		}
 	}
 
-	
 	private void tearDown() {
 
 		FileOutputStream fos;
@@ -144,7 +153,7 @@ public class AccountManager extends Menu {
 		try {
 			if (!file.exists())
 				file.createNewFile();
-			fos = new FileOutputStream(FILENAME,false);
+			fos = new FileOutputStream(FILENAME, false);
 			oos = new ObjectOutputStream(fos);
 			for (Record record : collection)
 				oos.writeObject((Record) record);
