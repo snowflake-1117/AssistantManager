@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class MemoManager extends Menu {
 	private ArrayList<String> memoList = new ArrayList<String>();
 	private static final String FILENAME = "memoManager.txt";
-	private boolean isModified=true;
+	private boolean isModified = false;
 	
 	public void showAndSelect() {
 		Scanner scan = new Scanner(System.in);
@@ -45,13 +45,13 @@ public class MemoManager extends Menu {
 			initializeList();
 		}
 		catch (IOException e) {
-			;
+			return;
 		}
 	}
 	
 	private void initializeList() throws IOException {
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(FILENAME));		
 		while (true) {
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(FILENAME));
 			String line = bufferedReader.readLine();
 			if (line == null)
 				break;
@@ -61,10 +61,11 @@ public class MemoManager extends Menu {
 	
 	private void addMemo() {
 		Scanner scan = new Scanner(System.in);		
-		System.out.print("메모 입력: ");
+		System.out.print("메모 추가: ");
 		String memo = scan.nextLine();
 		memoList.add(memo);		
 		isModified = true;
+		setNewline();
 	}
 	
 	private void writeMemoFile() {
@@ -80,22 +81,45 @@ public class MemoManager extends Menu {
 	}
 	
 	private void listMemo() {
-		
+		if (memoList.size()<1) {
+			System.out.println("메모장이 비어 있습니다");
+			return;
+		}
+    	for (int i=0; i<memoList.size(); i++)
+    		System.out.println("["+(i+1)+"] "+memoList.get(i));
+		setNewline();
 	}
 	
 	private void updateMemo() {
-		
+		Scanner scan = new Scanner(System.in);				
+		System.out.print("수정할 메모의 번호: ");
+		int id = scan.nextInt()-1;
+		scan.nextLine();
+		System.out.print("수정할 내용: ");
+		String content = scan.nextLine();
+		memoList.set(id, content);
+		isModified = true;
+		setNewline();
 	}
 	
 	private void deleteMemo() {
-		
+		Scanner scan = new Scanner(System.in);				
+		System.out.print("삭제할 메모의 번호: ");
+		int id = scan.nextInt()-1;
+		memoList.remove(id);
+		isModified = true;
+		setNewline();
 	}
 
 	protected void printMenu() {
-		System.out.println("1. 메모 생성");
+		System.out.println("1. 메모 추가");
 		System.out.println("2. 메모 리스트");
 		System.out.println("3. 메모 수정");
 		System.out.println("4. 메모 삭제");
 		System.out.println("5. 뒤로가기");
+	}
+	
+	private void setNewline() {
+		System.out.println("");
 	}
 }

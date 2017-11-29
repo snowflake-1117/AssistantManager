@@ -15,6 +15,7 @@ public class AssistantManager extends Menu {
 		while (choice != 4) {
       printMenu();
 			System.out.print("입력: ");
+      
 			choice = scanner.nextInt();
 			scanner.nextLine();
 			switch (choice) {
