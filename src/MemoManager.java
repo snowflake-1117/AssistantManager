@@ -9,17 +9,17 @@ public class MemoManager extends Menu {
 	private ArrayList<String> memoList = new ArrayList<String>();
 	private static final String FILENAME = "memoManager.txt";
 	private boolean isModified = false;
-	
+
 	public void showAndSelect() {
 		Scanner scan = new Scanner(System.in);
 		readMemoFile();
-		int n=0;
-		
+		int n = 0;
+
 		do {
 			printMenu();
-			System.out.print("ÀÔ·Â: ");
-			n = scan.nextInt();			
-			
+			System.out.print("ìž…ë ¥: ");
+			n = scan.nextInt();
+
 			switch (n) {
 			case 1:
 				addMemo();
@@ -35,22 +35,21 @@ public class MemoManager extends Menu {
 				break;
 			}
 		} while (n != 5);
-		
+
 		if (isModified)
 			writeMemoFile();
-  }
-	
+	}
+
 	private void readMemoFile() {
 		try {
 			initializeList();
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			return;
 		}
 	}
-	
+
 	private void initializeList() throws IOException {
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(FILENAME));		
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(FILENAME));
 		while (true) {
 			String line = bufferedReader.readLine();
 			if (line == null)
@@ -58,67 +57,67 @@ public class MemoManager extends Menu {
 			memoList.add(line);
 		}
 	}
-	
+
 	private void addMemo() {
-		Scanner scan = new Scanner(System.in);		
-		System.out.print("¸Þ¸ð Ãß°¡: ");
+		Scanner scan = new Scanner(System.in);
+		System.out.print("ë©”ëª¨ ì¶”ê°€: ");
 		String memo = scan.nextLine();
-		memoList.add(memo);		
+		memoList.add(memo);
 		isModified = true;
 		setNewline();
 	}
-	
+
 	private void writeMemoFile() {
-        try {
-        	PrintWriter printWriter = new PrintWriter(FILENAME);
-        	for (int i=0; i<memoList.size(); i++)
-        		printWriter.println(memoList.get(i));
-            printWriter.close();
-            
-        } catch (Exception e) {
-        	System.out.println("ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù");
-        }
+		try {
+			PrintWriter printWriter = new PrintWriter(FILENAME);
+			for (int i = 0; i < memoList.size(); i++)
+				printWriter.println(memoList.get(i));
+			printWriter.close();
+
+		} catch (Exception e) {
+			System.out.println("íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
+		}
 	}
-	
+
 	private void listMemo() {
-		if (memoList.size()<1) {
-			System.out.println("¸Þ¸ðÀåÀÌ ºñ¾î ÀÖ½À´Ï´Ù");
+		if (memoList.size() < 1) {
+			System.out.println("ë©”ëª¨ìž¥ì´ ë¹„ì–´ ìžˆìŠµë‹ˆë‹¤");
 			return;
 		}
-    	for (int i=0; i<memoList.size(); i++)
-    		System.out.println("["+(i+1)+"] "+memoList.get(i));
+		for (int i = 0; i < memoList.size(); i++)
+			System.out.println("[" + (i + 1) + "] " + memoList.get(i));
 		setNewline();
 	}
-	
+
 	private void updateMemo() {
-		Scanner scan = new Scanner(System.in);				
-		System.out.print("¼öÁ¤ÇÒ ¸Þ¸ðÀÇ ¹øÈ£: ");
-		int id = scan.nextInt()-1;
+		Scanner scan = new Scanner(System.in);
+		System.out.print("ìˆ˜ì •í•  ë©”ëª¨ì˜ ë²ˆí˜¸: ");
+		int id = scan.nextInt() - 1;
 		scan.nextLine();
-		System.out.print("¼öÁ¤ÇÒ ³»¿ë: ");
+		System.out.print("ìˆ˜ì •í•  ë‚´ìš©: ");
 		String content = scan.nextLine();
 		memoList.set(id, content);
 		isModified = true;
 		setNewline();
 	}
-	
+
 	private void deleteMemo() {
-		Scanner scan = new Scanner(System.in);				
-		System.out.print("»èÁ¦ÇÒ ¸Þ¸ðÀÇ ¹øÈ£: ");
-		int id = scan.nextInt()-1;
+		Scanner scan = new Scanner(System.in);
+		System.out.print("ì‚­ì œí•  ë©”ëª¨ì˜ ë²ˆí˜¸: ");
+		int id = scan.nextInt() - 1;
 		memoList.remove(id);
 		isModified = true;
 		setNewline();
 	}
 
 	protected void printMenu() {
-		System.out.println("1. ¸Þ¸ð Ãß°¡");
-		System.out.println("2. ¸Þ¸ð ¸®½ºÆ®");
-		System.out.println("3. ¸Þ¸ð ¼öÁ¤");
-		System.out.println("4. ¸Þ¸ð »èÁ¦");
-		System.out.println("5. µÚ·Î°¡±â");
+		System.out.println("1. ë©”ëª¨ ì¶”ê°€");
+		System.out.println("2. ë©”ëª¨ ë¦¬ìŠ¤íŠ¸");
+		System.out.println("3. ë©”ëª¨ ìˆ˜ì •");
+		System.out.println("4. ë©”ëª¨ ì‚­ì œ");
+		System.out.println("5. ë’¤ë¡œê°€ê¸°");
 	}
-	
+
 	private void setNewline() {
 		System.out.println("");
 	}
