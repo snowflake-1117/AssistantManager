@@ -49,7 +49,9 @@ public class CalculatorManager extends Menu {
             return "0";
         }
 
-        double result = calculateByOperators(numericalExpression);
+        String parenthesisExpression = calculateParenthesisExpression(numericalExpression);
+        String doubleOperatorExpression = changeDoubleOperator(parenthesisExpression);
+        double result = calculateByOperators(doubleOperatorExpression);
 
         final String DECIMAL_FORMAT = "#.######";
         DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT);
@@ -57,14 +59,32 @@ public class CalculatorManager extends Menu {
         return decimalFormat.format(result);
     }
 
+    private String calculateParenthesisExpression(String numericalExpression) {
+        String parenthesisExpression = numericalExpression;
+
+        while (parenthesisExpression.indexOf('(') != -1) {
+            int startOfNumericalExpression = parenthesisExpression.indexOf('(');
+            int endOfNumericalExpression = parenthesisExpression.indexOf(')');
+            double parenthesisCalculation = calculateByOperators(
+                    parenthesisExpression.substring(startOfNumericalExpression + 1, endOfNumericalExpression));
+            parenthesisExpression = parenthesisExpression.substring(0, startOfNumericalExpression)
+                    + parenthesisCalculation
+                    + parenthesisExpression.substring(endOfNumericalExpression + 1, parenthesisExpression.length());
+        }
+        return parenthesisExpression;
+    }
+
+    private String changeDoubleOperator(String parenthesisExpression) {
+        return parenthesisExpression.replace("--", "+").replace("+-", "-").replace("-+", "-").replace("++", "+");
+    }
+
+
     private double calculateByOperators(String numericalExpression) {
         // First string in the expression should be "0".
         // Because this calculation return wrong answer when '-' operation is written very first place.
         // This value is for preventing that problem.
         numericalExpression = "0" + numericalExpression;
         double result = 0;
-
-        numericalExpression = calculateParenthesisExpression(numericalExpression);
 
         Stack<Double> stackForCalculate = new Stack<>();
         StringTokenizer number = new StringTokenizer(numericalExpression, "+-/* ");
@@ -100,18 +120,5 @@ public class CalculatorManager extends Menu {
         }
 
         return result;
-    }
-
-    private String calculateParenthesisExpression(String numericalExpression) {
-        if (numericalExpression.indexOf('(') != -1) {
-            int startOfNumericalExpression = numericalExpression.indexOf('(');
-            int endOfNumericalExpression = numericalExpression.indexOf(')');
-            double parenthesisCalculation = calculateByOperators
-                    (numericalExpression.substring(startOfNumericalExpression + 1, endOfNumericalExpression));
-            return numericalExpression.substring(0, startOfNumericalExpression)
-                    + parenthesisCalculation
-                    + numericalExpression.substring(endOfNumericalExpression + 1, numericalExpression.length());
-        }
-        return numericalExpression;
     }
 }
