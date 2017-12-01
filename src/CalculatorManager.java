@@ -36,13 +36,20 @@ public class CalculatorManager extends Menu {
         }
     }
 
+    @Override
+    protected void printMenu() {
+        System.out.println("1. 계산기");
+        System.out.println("2. 단위변환");
+        System.out.println("3. 뒤로가기");
+        System.out.print("입력: ");
+    }
+
     private String calculate(String numericalExpression) {
-        if(numericalExpression.equals("")){
+        if (numericalExpression.equals("")) {
             return "0";
         }
 
-        double result = 0;
-        result = calculateByOperators(numericalExpression, result);
+        double result = calculateByOperators(numericalExpression);
 
         final String DECIMAL_FORMAT = "#.######";
         DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT);
@@ -50,7 +57,15 @@ public class CalculatorManager extends Menu {
         return decimalFormat.format(result);
     }
 
-    private double calculateByOperators(String numericalExpression, double result) {
+    private double calculateByOperators(String numericalExpression) {
+        // First string in the expression should be "0".
+        // Because this calculation return wrong answer when '-' operation is written very first place.
+        // This value is for preventing that problem.
+        numericalExpression = "0" + numericalExpression;
+        double result = 0;
+
+        numericalExpression = calculateParenthesisExpression(numericalExpression);
+
         Stack<Double> stackForCalculate = new Stack<>();
         StringTokenizer number = new StringTokenizer(numericalExpression, "+-/* ");
         StringTokenizer operator = new StringTokenizer(numericalExpression, "1234567890. ");
@@ -87,11 +102,16 @@ public class CalculatorManager extends Menu {
         return result;
     }
 
-    @Override
-    protected void printMenu() {
-        System.out.println("1. 계산기");
-        System.out.println("2. 단위변환");
-        System.out.println("3. 뒤로가기");
-        System.out.print("입력: ");
+    private String calculateParenthesisExpression(String numericalExpression) {
+        if (numericalExpression.indexOf('(') != -1) {
+            int startOfNumericalExpression = numericalExpression.indexOf('(');
+            int endOfNumericalExpression = numericalExpression.indexOf(')');
+            double parenthesisCalculation = calculateByOperators
+                    (numericalExpression.substring(startOfNumericalExpression + 1, endOfNumericalExpression));
+            return numericalExpression.substring(0, startOfNumericalExpression)
+                    + parenthesisCalculation
+                    + numericalExpression.substring(endOfNumericalExpression + 1, numericalExpression.length());
+        }
+        return numericalExpression;
     }
 }
