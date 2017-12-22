@@ -40,7 +40,7 @@ public class MemoManager extends Menu {
 			writeMemoFile();
   }
 	
-	protected void readMemoFile() {
+	private void readMemoFile() {
 		try {
 			initializeList();
 		}
@@ -81,7 +81,7 @@ public class MemoManager extends Menu {
         }
 	}
 	
-	protected void listMemo() {
+	private void listMemo() {
 		if (checkEmptyList())
 			return;
     	for (int i=0; i<memoList.size(); i++)

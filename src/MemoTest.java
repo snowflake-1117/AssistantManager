@@ -4,18 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MemoTest {
 	static MemoManager mm = new MemoManager();
 
-	@BeforeClass
-	public static void listSetUp() {
-		mm.readMemoFile();
-		mm.listMemo();
-	}
-	
 	@Test
 	public void writeToListTest() {
 		String addedMemo = mm.addMemo();
