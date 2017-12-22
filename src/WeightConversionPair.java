@@ -17,12 +17,20 @@ public class WeightConversionPair extends ConversionPair {
         if (isConversionFromPoundToKg) {
             System.out.print("변환할 pound 값을 입력하세요: ");
             inputNumber = scanner.nextDouble();
-            result = inputNumber * 0.45392 + " kg";
+            result = conversionToKg(inputNumber);
         } else {
             System.out.print("변환할 kg 값을 입력하세요: ");
             inputNumber = scanner.nextDouble();
-            result = inputNumber * 2.20462 + " pound";
+            result = conversionToPound(inputNumber);
         }
         return result;
+    }
+
+    String conversionToKg(double inputNumber) {
+        return inputNumber * 0.45392 + " kg";
+    }
+
+    String conversionToPound(double inputNumber) {
+        return inputNumber * 2.20462 + " pound";
     }
 }
