@@ -16,9 +16,9 @@ public class AccountTest {
 	@Test
 	public void testCreateRecord() {
 		
-		String date = "2017.12.25";
-		String name = "아이스크림 케익";
-		String price = "34500";
+		String date = "2010.06.20";
+		String name = "아이스크림";
+		String price = "500";
 		
 		Record expected = new Record(date,name,price); 
 		manager.insertToList(AccountManager.ENDOFLIST, date,name,price);
@@ -27,8 +27,16 @@ public class AccountTest {
 	}
 	
 	@Test
-	public void testWrittenToFile() {
+	public void testUpdateRecord() {
+		String date = "2017.12.25";
+		String name = "아이스크림 케익";
+		String price = "34500";
 		
+		Record expected = new Record(date,name,price); 
+		manager.deleteAt(AccountManager.ENDOFLIST);
+		manager.insertToList(AccountManager.ENDOFLIST, date,name,price);
+		Record received = manager.checkInsertedRecord(AccountManager.ENDOFLIST);
+		assertArrayEquals(expected.data, received.data);
 	}
 	
 	@After

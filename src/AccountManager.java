@@ -55,6 +55,7 @@ public class AccountManager extends Menu {
 			case 5:
 			default:
 				tearDown();
+				System.out.println();
 				break;
 			}
 		}
@@ -116,12 +117,16 @@ public class AccountManager extends Menu {
 		System.out.print("\n레코드 id:");
 		int id = scanner.nextInt() - 1;
 		scanner.nextLine();
+		deleteAt(id);
+		return id;
+	}
+	
+	protected void deleteAt(int id) {
 		try {
 			collection.remove(id);
 		} catch (Exception ex) {
 			System.out.println("해당 레코드는 존재하지 않습니다.");
 		}
-		return id;
 	}
 	
 	protected Record checkInsertedRecord(int id){
