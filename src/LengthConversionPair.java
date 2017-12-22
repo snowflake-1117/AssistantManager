@@ -17,12 +17,20 @@ public class LengthConversionPair extends ConversionPair {
         if (isConversionFromInchToCm) {
             System.out.print("변환할 inch 값을 입력하세요: ");
             inputNumber = scanner.nextDouble();
-            result = inputNumber * 2.54 + " cm";
+            result = conversionToCm(inputNumber);
         } else {
             System.out.print("변환할 cm 값을 입력하세요: ");
             inputNumber = scanner.nextDouble();
-            result = inputNumber * 0.393701 + " inch";
+            result = conversionToInch(inputNumber);
         }
         return result;
+    }
+
+    String conversionToCm(double inputNumber) {
+        return inputNumber * 2.54 + " cm";
+    }
+
+    String conversionToInch(double inputNumber) {
+        return inputNumber * 0.393701 + " inch";
     }
 }

@@ -17,12 +17,20 @@ public class TemperatureConversionPair extends ConversionPair {
         if (isConversionFromFahrenheitPoundToCelsius) {
             System.out.print("변환할 °F 값을 입력하세요: ");
             inputNumber = scanner.nextDouble();
-            result = (inputNumber - 32) / 1.8 + " °C";
+            result = conversionToCelsius(inputNumber);
         } else {
             System.out.print("변환할 °C 값을 입력하세요: ");
             inputNumber = scanner.nextDouble();
-            result = (inputNumber * 1.8 + 32) + " °F";
+            result = conversionToFahrenheit(inputNumber);
         }
         return result;
+    }
+
+    String conversionToCelsius(double inputNumber) {
+        return (inputNumber - 32) / 1.8 + " °C";
+    }
+
+    String conversionToFahrenheit(double inputNumber) {
+        return (inputNumber * 1.8 + 32) + " °F";
     }
 }

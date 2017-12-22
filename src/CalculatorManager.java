@@ -1,7 +1,5 @@
 import java.text.DecimalFormat;
-import java.util.Scanner;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class CalculatorManager extends Menu {
     private Scanner scanner = new Scanner(System.in);
@@ -44,7 +42,7 @@ public class CalculatorManager extends Menu {
         System.out.print("입력: ");
     }
 
-    private String calculate(String numericalExpression) {
+    String calculate(String numericalExpression) {
         if (numericalExpression.equals("")) {
             return "0";
         }
@@ -75,7 +73,9 @@ public class CalculatorManager extends Menu {
     }
 
     private String changeDoubleOperator(String parenthesisExpression) {
-        return parenthesisExpression.replace("--", "+").replace("+-", "-").replace("-+", "-").replace("++", "+");
+        return parenthesisExpression.replace("--", "+").replace("+-", "-")
+                .replace("-+", "-").replace("++", "+")
+                .replace("/+", "/").replace("*+", "*");
     }
 
 
@@ -92,26 +92,39 @@ public class CalculatorManager extends Menu {
 
         stackForCalculate.push(Double.parseDouble(number.nextToken()));
         while (number.hasMoreTokens()) {
-            char currentOperator = operator.nextToken().charAt(0);
+            String currentOperator = operator.nextToken();
             String num = number.nextToken();
             double operand;
 
             switch (currentOperator) {
-                case '+':
+                case "+":
                     stackForCalculate.push(Double.parseDouble(num));
                     break;
-                case '-':
+                case "-":
                     stackForCalculate.push(-Double.parseDouble(num));
                     break;
-                case '*':
+                case "*":
                     operand = stackForCalculate.pop();
                     operand *= Double.parseDouble(num);
                     stackForCalculate.push(operand);
                     break;
-                case '/':
+                case "*-":
+                    operand = stackForCalculate.pop();
+                    operand *= -Double.parseDouble(num);
+                    stackForCalculate.push(operand);
+                    break;
+                case "/":
                     operand = stackForCalculate.pop();
                     operand /= Double.parseDouble(num);
                     stackForCalculate.push(operand);
+                    break;
+                case "/-":
+                    operand = stackForCalculate.pop();
+                    operand /= -Double.parseDouble(num);
+                    stackForCalculate.push(operand);
+                    break;
+                default:
+                    System.out.println("잘못된 입력입니다.");
             }
         }
 
