@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,20 +12,19 @@ public class AccountManager extends Menu {
 	private static final String FILENAME = "Accounts.txt";
 	private Scanner scanner;
 	private Vector<Record> collection = new Vector<Record>();
-	private Record record;
-
+	protected static int ENDOFLIST = 0;
+	
 	@Override
 	public void showAndSelect() {
 		scanner = new Scanner(System.in);
 		setup();
 		run();
 		tearDown();
-
 	}
 
 	@Override
 	protected void printMenu() {
-		System.out.println("1. 가계부 생성");
+		System.out.println("\n1. 가계부 생성");
 		System.out.println("2. 가계부 리스트");
 		System.out.println("3. 가계부 수정");
 		System.out.println("4. 가계부 삭제");
@@ -37,21 +35,23 @@ public class AccountManager extends Menu {
 		int choice = -1;
 		while (choice != 5) {
 			printMenu();
+			
 			System.out.print("입력: ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
+			
 			switch (choice) {
 			case 1:
-				create();
+				insertRecordAt(ENDOFLIST);
 				break;
 			case 2:
-				print();
+				printAccounts();
 				break;
 			case 3:
-				update();
+				updateRecord();
 				break;
 			case 4:
-				delete();
+				deleteRecord();
 				break;
 			case 5:
 			default:
@@ -60,11 +60,10 @@ public class AccountManager extends Menu {
 		}
 	}
 
-	private void setup() {
+	protected void setup() {
 		FileInputStream fis;
 		ObjectInputStream ois;
 		collection.clear();
-
 		try {
 			fis = new FileInputStream(FILENAME);
 			ois = new ObjectInputStream(fis);
@@ -76,89 +75,72 @@ public class AccountManager extends Menu {
 		} catch (Exception e) {
 			// 처음 파일을 생성해서 아직 파일이 없다
 		}
-
+		ENDOFLIST = collection.size();
 	}
 
-	private void create() {
-		System.out.println("레코드 생성");
-		record = new Record();
-		getDate();
-		getName();
-		getPrice();
-		collection.add(record);
-	}
-
-	private void getDate() {
-		System.out.print("날짜(yyyy.mm.dd):");
-		String dateInput = scanner.nextLine();
-		if (dateInput.matches("^\\d{4}.\\d{2}.\\d{2}"))
-			record.date = dateInput;
-		else
-			record.date = "0000.00.00";
-	}
-
-	private void getName() {
+	private void insertRecordAt(int id) {
+		++ ENDOFLIST;
+		System.out.print("\n날짜(yyyy.mm.dd):");
+		String date = scanner.nextLine();
+		if (!date.matches("^\\d{4}.\\d{2}.\\d{2}"))
+			date = "0000.00.00";
 		System.out.print("이름:");
-		record.name = scanner.nextLine();
-	}
-
-	private void getPrice() {
+		String name = scanner.nextLine();
 		System.out.print("가격:");
-		record.price = scanner.nextLine();
+		String price = scanner.nextLine();
+		
+		insetToList(id,  date, name, price);
 	}
-
-	private void print() {
-		System.out.println("레코드 출력");
-		Iterator iterator = collection.iterator();
+	
+	protected void insetToList(int id, String date, String name, String price) {
+		Record record = new Record(date,name,price);
+		collection.add(id,record);
+	}
+	
+	private void printAccounts() {
+		
+		Iterator<Record> iterator = collection.iterator();
 		int id = 1;
 		while (iterator.hasNext()) {
 			Record record = (Record) iterator.next();
-			System.out.println(String.format("%3s %3s %3s %3s", id++, record.date, record.name, record.price));
+			System.out.println(String.format("%3s %3s %3s %3s", id++, record.data[0], record.data[1], record.data[2]));
 		}
 	}
 
-	private void update() {
-		System.out.print("수정할 레코드:");
-		int id = scanner.nextInt() - 1;
-		scanner.nextLine();
-		try {
-			record = collection.get(id);
-			collection.remove(id);
-			getDate();
-			getName();
-			getPrice();
-			collection.add(id, record);
-		} catch (Exception ex) {
-			System.out.println("해당 레코드는 존재하지 않습니다.");
-		}
+	private void updateRecord() {
+			int id = deleteRecord();
+			insertRecordAt(id);
 	}
 
-	private void delete() {
-		System.out.print("삭제할 레코드:");
+	private int deleteRecord() {
+		System.out.print("\n레코드 id:");
 		int id = scanner.nextInt() - 1;
 		scanner.nextLine();
 		try {
-			record = collection.get(id);
 			collection.remove(id);
 		} catch (Exception ex) {
 			System.out.println("해당 레코드는 존재하지 않습니다.");
 		}
+		return id;
 	}
+	
+	protected Record checkInsertedRecord(int id){
+		return collection.get(id);
+	} 
 
-	private void tearDown() {
-
-		FileOutputStream fos;
-		ObjectOutputStream oos;
+	protected void tearDown() {
+		FileOutputStream fileOutputStream;
+		ObjectOutputStream objectOutputStream;
 		File file = new File(FILENAME);
 		try {
 			if (!file.exists())
 				file.createNewFile();
-			fos = new FileOutputStream(FILENAME, false);
-			oos = new ObjectOutputStream(fos);
+			fileOutputStream = new FileOutputStream(FILENAME, false);
+			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			for (Record record : collection)
-				oos.writeObject((Record) record);
-			oos.close();
-			fos.close();
+				objectOutputStream.writeObject((Record) record);
+			objectOutputStream.close();
+			fileOutputStream.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
