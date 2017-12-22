@@ -19,7 +19,6 @@ public class AccountManager extends Menu {
 		scanner = new Scanner(System.in);
 		setup();
 		run();
-		tearDown();
 	}
 
 	@Override
@@ -55,6 +54,7 @@ public class AccountManager extends Menu {
 				break;
 			case 5:
 			default:
+				tearDown();
 				break;
 			}
 		}
@@ -89,10 +89,10 @@ public class AccountManager extends Menu {
 		System.out.print("АЁАн:");
 		String price = scanner.nextLine();
 		
-		insetToList(id,  date, name, price);
+		insertToList(id,  date, name, price);
 	}
 	
-	protected void insetToList(int id, String date, String name, String price) {
+	protected void insertToList(int id, String date, String name, String price) {
 		Record record = new Record(date,name,price);
 		collection.add(id,record);
 	}
