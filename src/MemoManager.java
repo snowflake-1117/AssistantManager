@@ -81,17 +81,25 @@ public class MemoManager extends Menu {
 	}
 	
 	private void listMemo() {
-		if (memoList.size()<1) {
-			System.out.println("메모장이 비어 있습니다");
+		if (checkEmptyList())
 			return;
-		}
     	for (int i=0; i<memoList.size(); i++)
     		System.out.println("["+(i+1)+"] "+memoList.get(i));
 		setNewline();
 	}
 	
+	private boolean checkEmptyList() {
+		if (memoList.size()<1) {
+			System.out.println("메모장이 비어 있습니다");
+			return true;
+		}		
+		return false;
+	}
+	
 	private void updateMemo() {
-		Scanner scan = new Scanner(System.in);				
+		if (checkEmptyList())
+			return;
+		Scanner scan = new Scanner(System.in);
 		System.out.print("수정할 메모의 번호: ");
 		int id = scan.nextInt()-1;
 		scan.nextLine();
@@ -103,6 +111,8 @@ public class MemoManager extends Menu {
 	}
 	
 	private void deleteMemo() {
+		if (checkEmptyList())
+			return;
 		Scanner scan = new Scanner(System.in);				
 		System.out.print("삭제할 메모의 번호: ");
 		int id = scan.nextInt()-1;
