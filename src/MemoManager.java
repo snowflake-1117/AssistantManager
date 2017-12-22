@@ -40,7 +40,7 @@ public class MemoManager extends Menu {
 			writeMemoFile();
   }
 	
-	private void readMemoFile() {
+	protected void readMemoFile() {
 		try {
 			initializeList();
 		}
@@ -49,7 +49,7 @@ public class MemoManager extends Menu {
 		}
 	}
 	
-	protected void initializeList() throws IOException {
+	private void initializeList() throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(FILENAME));		
 		while (true) {
 			String line = bufferedReader.readLine();
@@ -69,19 +69,18 @@ public class MemoManager extends Menu {
 		return memo;
 	}
 	
-	private void writeMemoFile() {
+	protected void writeMemoFile() {
         try {
         	PrintWriter printWriter = new PrintWriter(FILENAME);
         	for (int i=0; i<memoList.size(); i++)
         		printWriter.println(memoList.get(i));
-            printWriter.close();
-            
+            printWriter.close();            
         } catch (Exception e) {
         	System.out.println("파일을 찾을 수 없습니다");
         }
 	}
 	
-	private void listMemo() {
+	protected void listMemo() {
 		if (checkEmptyList())
 			return;
     	for (int i=0; i<memoList.size(); i++)
