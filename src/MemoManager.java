@@ -57,6 +57,7 @@ public class MemoManager extends Menu {
 				break;
 			memoList.add(line);
 		}
+		bufferedReader.close();
 	}
 	
 	protected String addMemo() {
