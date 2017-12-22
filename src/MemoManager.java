@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MemoManager extends Menu {
-	private ArrayList<String> memoList = new ArrayList<String>();
+	protected ArrayList<String> memoList = new ArrayList<String>();
 	private static final String FILENAME = "memoManager.txt";
-	private boolean isModified = false;
+	protected boolean isModified = false;
 	
 	public void showAndSelect() {
 		Scanner scan = new Scanner(System.in);
@@ -49,7 +49,7 @@ public class MemoManager extends Menu {
 		}
 	}
 	
-	private void initializeList() throws IOException {
+	protected void initializeList() throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(FILENAME));		
 		while (true) {
 			String line = bufferedReader.readLine();
@@ -59,13 +59,14 @@ public class MemoManager extends Menu {
 		}
 	}
 	
-	private void addMemo() {
+	protected String addMemo() {
 		Scanner scan = new Scanner(System.in);		
 		System.out.print("메모 추가: ");
 		String memo = scan.nextLine();
 		memoList.add(memo);		
 		isModified = true;
 		setNewline();
+		return memo;
 	}
 	
 	private void writeMemoFile() {
