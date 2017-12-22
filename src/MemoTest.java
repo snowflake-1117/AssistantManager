@@ -25,6 +25,7 @@ public class MemoTest {
 	
 	@Test
 	public void writeToFileTest() throws IOException {
+		mm.memoList.add("memo for test");
 		int lastNode = mm.memoList.size()-1;
 		String memoLastLine = mm.memoList.get(lastNode);
 		mm.writeMemoFile();
@@ -39,6 +40,7 @@ public class MemoTest {
 			if (line == null)
 				break;
 		}
+		bufferedReader.close();
 		String fileLastLine = readLine[i%2];
 		assertEquals(memoLastLine, fileLastLine);
 			
