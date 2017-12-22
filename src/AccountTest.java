@@ -1,14 +1,20 @@
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class AccountTest {
 	AccountManager manager;
 	
-	@Test
-	public void testCreateRecord() {
+	@Before
+	public void setup() {
 		manager = new AccountManager();
 		manager.setup();
+	}
+	
+	@Test
+	public void testCreateRecord() {
 		
 		String date = "2017.12.25";
 		String name = "아이스크림 케익";
@@ -24,4 +30,10 @@ public class AccountTest {
 	public void testWrittenToFile() {
 		
 	}
+	
+	@After
+	public void tearDown() {
+		manager.tearDown();
+	}
+	
 }
