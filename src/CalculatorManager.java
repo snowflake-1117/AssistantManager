@@ -1,7 +1,5 @@
 import java.text.DecimalFormat;
-import java.util.Scanner;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class CalculatorManager extends Menu {
     private Scanner scanner = new Scanner(System.in);
@@ -44,7 +42,7 @@ public class CalculatorManager extends Menu {
         System.out.print("입력: ");
     }
 
-    private String calculate(String numericalExpression) {
+    String calculate(String numericalExpression) {
         if (numericalExpression.equals("")) {
             return "0";
         }
@@ -112,8 +110,9 @@ public class CalculatorManager extends Menu {
                     break;
                 case "*-":
                     operand = stackForCalculate.pop();
-                    operand *= Double.parseDouble("-"+num);
+                    operand *= -Double.parseDouble(num);
                     stackForCalculate.push(operand);
+                    break;
                 case "/":
                     operand = stackForCalculate.pop();
                     operand /= Double.parseDouble(num);
@@ -121,8 +120,11 @@ public class CalculatorManager extends Menu {
                     break;
                 case "/-":
                     operand = stackForCalculate.pop();
-                    operand /= Double.parseDouble("-"+num);
+                    operand /= -Double.parseDouble(num);
                     stackForCalculate.push(operand);
+                    break;
+                default:
+                    System.out.println("잘못된 입력입니다.");
             }
         }
 
