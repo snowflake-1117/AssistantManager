@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 public class MemoTest {
-	static MemoManager mm = new MemoManager();
+	MemoManager mm = new MemoManager();
 
 	@Test
 	public void writeToListTest() {
