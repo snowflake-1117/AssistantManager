@@ -25,23 +25,21 @@ public class MemoTest {
 	
 	@Test
 	public void writeToFileTest() throws IOException {
-		mm.memoList.add("memo for test");
+		mm.memoList.add("memo for file write test");
 		int lastNode = mm.memoList.size()-1;
 		String memoLastLine = mm.memoList.get(lastNode);
 		mm.writeMemoFile();
 
 		BufferedReader bufferedReader = new BufferedReader(new FileReader("MemoManager.txt"));		
-		String readLine[] = new String[2];
-		int i = 0;
+		String readLine = "", line;
 		while (true) {
-			String line = bufferedReader.readLine();
-			readLine[(i%2)] = line;
-			i++;
+			line = bufferedReader.readLine();
 			if (line == null)
 				break;
+			readLine = line;
 		}
 		bufferedReader.close();
-		String fileLastLine = readLine[i%2];
+		String fileLastLine = readLine;
 		assertEquals(memoLastLine, fileLastLine);
 			
 	}
