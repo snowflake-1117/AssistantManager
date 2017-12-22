@@ -75,7 +75,9 @@ public class CalculatorManager extends Menu {
     }
 
     private String changeDoubleOperator(String parenthesisExpression) {
-        return parenthesisExpression.replace("--", "+").replace("+-", "-").replace("-+", "-").replace("++", "+");
+        return parenthesisExpression.replace("--", "+").replace("+-", "-")
+                .replace("-+", "-").replace("++", "+")
+                .replace("/+", "/").replace("*+", "*");
     }
 
 
@@ -92,25 +94,34 @@ public class CalculatorManager extends Menu {
 
         stackForCalculate.push(Double.parseDouble(number.nextToken()));
         while (number.hasMoreTokens()) {
-            char currentOperator = operator.nextToken().charAt(0);
+            String currentOperator = operator.nextToken();
             String num = number.nextToken();
             double operand;
 
             switch (currentOperator) {
-                case '+':
+                case "+":
                     stackForCalculate.push(Double.parseDouble(num));
                     break;
-                case '-':
+                case "-":
                     stackForCalculate.push(-Double.parseDouble(num));
                     break;
-                case '*':
+                case "*":
                     operand = stackForCalculate.pop();
                     operand *= Double.parseDouble(num);
                     stackForCalculate.push(operand);
                     break;
-                case '/':
+                case "*-":
+                    operand = stackForCalculate.pop();
+                    operand *= Double.parseDouble("-"+num);
+                    stackForCalculate.push(operand);
+                case "/":
                     operand = stackForCalculate.pop();
                     operand /= Double.parseDouble(num);
+                    stackForCalculate.push(operand);
+                    break;
+                case "/-":
+                    operand = stackForCalculate.pop();
+                    operand /= Double.parseDouble("-"+num);
                     stackForCalculate.push(operand);
             }
         }
