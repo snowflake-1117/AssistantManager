@@ -10,20 +10,26 @@ public class MemoTest {
 	MemoManager mm = new MemoManager();
 
 	@Test
-	public void writeToListTest() {
+	public void addMemoTest() {
 		String addedMemo = mm.addMemo();
-		int lastNode = mm.memoList.size()-1;
+		int lastNode = mm.memoList.size() - 1;
 		assertEquals(addedMemo, mm.memoList.get(lastNode));
 	}
-	
+
 	@Test
-	public void writeToFileTest() throws IOException {
-		mm.memoList.add("memo for file write test");
-		int lastNode = mm.memoList.size()-1;
+	public void writeMemoFileTest() throws IOException {
+		mm.memoList.add("memo for writeMemoFileTest");
+		int lastNode = mm.memoList.size() - 1;
 		String memoLastLine = mm.memoList.get(lastNode);
+
 		mm.writeMemoFile();
 
-		BufferedReader bufferedReader = new BufferedReader(new FileReader("MemoManager.txt"));		
+		String fileLastLine = getFileLastLine();
+		assertEquals(memoLastLine, fileLastLine);
+	}
+
+	private String getFileLastLine() throws IOException {
+		BufferedReader bufferedReader = new BufferedReader(new FileReader("MemoManager.txt"));
 		String readLine = "", line;
 		while (true) {
 			line = bufferedReader.readLine();
@@ -32,11 +38,7 @@ public class MemoTest {
 			readLine = line;
 		}
 		bufferedReader.close();
-		String fileLastLine = readLine;
-		assertEquals(memoLastLine, fileLastLine);
-			
+		return readLine;
 	}
-	
-	
 
 }
