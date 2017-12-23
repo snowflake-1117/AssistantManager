@@ -23,11 +23,11 @@ public class AccountManager extends Menu {
 
 	@Override
 	protected void printMenu() {
-		System.out.println("\n1. °¡°èºÎ »ý¼º");
-		System.out.println("2. °¡°èºÎ ¸®½ºÆ®");
-		System.out.println("3. °¡°èºÎ ¼öÁ¤");
-		System.out.println("4. °¡°èºÎ »èÁ¦");
-		System.out.println("5. µÚ·Î°¡±â");
+		System.out.println("\n1. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+		System.out.println("2. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®");
+		System.out.println("3. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+		System.out.println("4. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+		System.out.println("5. ï¿½Ú·Î°ï¿½ï¿½ï¿½");
 	}
 
 	protected void run() {
@@ -35,7 +35,7 @@ public class AccountManager extends Menu {
 		while (choice != 5) {
 			printMenu();
 
-			System.out.print("ÀÔ·Â: ");
+			System.out.print("ï¿½Ô·ï¿½: ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
 
@@ -69,12 +69,13 @@ public class AccountManager extends Menu {
 			fis = new FileInputStream(FILENAME);
 			ois = new ObjectInputStream(fis);
 			Record temp;
-			while ((temp = (Record) ois.readObject()) != null) // ÆÄÀÏ ÀÌ³¡³ªÁö ¾Ê¾Ò´Ù¸é
+			while ((temp = (Record) ois.readObject()) != null) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì³ï¿½ï¿½ï¿½ï¿½ï¿½
+																// ï¿½Ê¾Ò´Ù¸ï¿½
 				collection.add(temp);
 			ois.close();
 			fis.close();
 		} catch (Exception e) {
-			// Ã³À½ ÆÄÀÏÀ» »ý¼ºÇØ¼­ ¾ÆÁ÷ ÆÄÀÏÀÌ ¾ø´Ù
+			// Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		}
 		ENDOFLIST = collection.size();
 	}
@@ -86,13 +87,13 @@ public class AccountManager extends Menu {
 	}
 
 	private Record getData() {
-		System.out.print("\n³¯Â¥(yyyy.mm.dd):");
+		System.out.print("\nï¿½ï¿½Â¥(yyyy.mm.dd):");
 		String date = scanner.nextLine();
 		if (!date.matches("^\\d{4}.\\d{2}.\\d{2}"))
 			date = "0000.00.00";
-		System.out.print("ÀÌ¸§:");
+		System.out.print("ï¿½Ì¸ï¿½:");
 		String name = scanner.nextLine();
-		System.out.print("°¡°Ý:");
+		System.out.print("ï¿½ï¿½ï¿½ï¿½:");
 		String price = scanner.nextLine();
 
 		Record record = new Record(date, name, price);
@@ -115,39 +116,43 @@ public class AccountManager extends Menu {
 
 	private void updateRecord() {
 		int id = getId();
-		Record record = getData();
-		updateAt(id, record);
+		try {
+			collection.elementAt(id);
+			Record record = getData();
+			updateAt(id, record);
+		} catch (Exception ex) {
+			System.out.println("ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Úµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");			
+		}
 	}
-	
-	
+
 	private int getId() {
-		System.out.print("\n·¹ÄÚµå id:");
+		System.out.print("\nï¿½ï¿½ï¿½Úµï¿½ id:");
 		int id = scanner.nextInt() - 1;
 		scanner.nextLine();
-		
+
 		return id;
 	}
-	
-	protected Record getRecord (int id) {
+
+	protected Record getRecord(int id) {
 		return collection.get(id);
 	}
-	
+
 	public Record updateAt(int id, Record record) {
 		collection.set(id, record);
 		return collection.get(id);
 	}
-	
+
 	private int deleteRecord() {
 		int id = getId();
 		deleteAt(id);
 		return id;
 	}
-	
+
 	protected void deleteAt(int id) {
 		try {
 			collection.remove(id);
 		} catch (Exception ex) {
-			System.out.println("ÇØ´ç ·¹ÄÚµå´Â Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Úµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 		}
 	}
 
@@ -170,6 +175,5 @@ public class AccountManager extends Menu {
 		}
 
 	}
-
 
 }
