@@ -92,30 +92,25 @@ public class MemoManager extends Menu {
 		setNewline();
 	}
 
-	protected String[] updateMemo() {
-		String updateInfo[] = {"", ""};
+	protected void updateMemo() {
 		if (checkEmptyList())
-			return updateInfo;
+			return;
 		
 		Scanner scan = new Scanner(System.in);
 		System.out.print("수정할 메모의 번호: ");
 		int id = scan.nextInt() - 1;
-		if (id<0 || id>=memoList.size()) {
-			System.out.println("없는 번호입니다.");
-			return updateInfo;
-		}
+		if (isInvalidId(id))
+			return;
 		
-		updateInfo[0] = Integer.toString(id);
 		scan.nextLine(); //버퍼 비움
 		
 		System.out.print("수정할 내용: ");
 		String content = scan.nextLine();
 		memoList.set(id, content);
-		updateInfo[1] = content;
 		
 		isModified = true;
 		setNewline();
-		return updateInfo;
+		return;
 	}
 
 	private void deleteMemo() {
@@ -125,10 +120,8 @@ public class MemoManager extends Menu {
 		Scanner scan = new Scanner(System.in);
 		System.out.print("삭제할 메모의 번호: ");
 		int id = scan.nextInt() - 1;
-		if (id<0 || id>=memoList.size()) {
-			System.out.println("없는 번호입니다.");
+		if (isInvalidId(id))
 			return;
-		}
 
 		memoList.remove(id);
 		isModified = true;
@@ -141,6 +134,16 @@ public class MemoManager extends Menu {
 			return true;
 		}
 		return false;
+	}
+	
+	private boolean isInvalidId(int id) {
+		if (id < 0 || id >= memoList.size()) {
+			System.out.println("없는 번호입니다.");
+			setNewline();
+			return true;
+		}
+		else
+			return false;
 	}
 
 	protected void printMenu() {
