@@ -34,6 +34,8 @@ public class MemoManager extends Menu {
 			case 4:
 				deleteMemo();
 				break;
+			case 5:
+				break;
 			default:
 				System.out.println("잘못된 입력입니다.");
 			}
@@ -62,7 +64,6 @@ public class MemoManager extends Menu {
 		bufferedReader.close();
 	}
 
-
 	protected void writeMemoFile() {
 		try {
 			PrintWriter printWriter = new PrintWriter(FILENAME);
@@ -70,7 +71,7 @@ public class MemoManager extends Menu {
 				printWriter.println(memoList.get(i));
 			printWriter.close();
 		} catch (Exception e) {
-			System.out.println("파일을 찾을 수 없습니다");
+			System.out.println("파일을 찾을 수 없습니다.");
 		}
 	}
 
@@ -84,8 +85,7 @@ public class MemoManager extends Menu {
 		return memo;
 	}
 
-
-	private void listMemo() {
+	protected void listMemo() {
 		if (checkEmptyList())
 			return;
 		for (int i = 0; i < memoList.size(); i++)
@@ -93,30 +93,46 @@ public class MemoManager extends Menu {
 		setNewline();
 	}
 
-	private void updateMemo() {
-
+	protected String[] updateMemo() {
+		String updateInfo[] = { "", "" };
 		if (checkEmptyList())
-			return;
+			return updateInfo;
+
 		Scanner scan = new Scanner(System.in);
 		System.out.print("수정할 메모의 번호: ");
 		int id = scan.nextInt() - 1;
-		scan.nextLine(); //버퍼 비움
-		System.out.print("수정할 내용: ");
 
+		if (id < 0 || id >= memoList.size()) {
+			System.out.println("없는 번호입니다.");
+			return updateInfo;
+		}
+
+		updateInfo[0] = Integer.toString(id);
+		scan.nextLine(); // 버퍼 비움
+
+		System.out.print("수정할 내용: ");
 		String content = scan.nextLine();
 		memoList.set(id, content);
+		updateInfo[1] = content;
+
 		isModified = true;
 		setNewline();
+		return updateInfo;
 	}
 
 	private void deleteMemo() {
 
 		if (checkEmptyList())
 			return;
+
 		Scanner scan = new Scanner(System.in);
 		System.out.print("삭제할 메모의 번호: ");
-
 		int id = scan.nextInt() - 1;
+		if (id < 0 || id >= memoList.size()) {
+			System.out.println("없는 번호입니다.");
+			return;
+		}
+
 		memoList.remove(id);
 		isModified = true;
 		setNewline();
@@ -131,11 +147,11 @@ public class MemoManager extends Menu {
 	}
 
 	protected void printMenu() {
-		System.out.println("1. 硫붾え 異붽�");
-		System.out.println("2. 硫붾え 由ъ뒪�듃");
-		System.out.println("3. 硫붾え �닔�젙");
-		System.out.println("4. 硫붾え �궘�젣");
-		System.out.println("5. �뮘濡쒓�湲�");
+		System.out.println("1. 메모 추가");
+		System.out.println("2. 메모 리스트");
+		System.out.println("3. 메모 수정");
+		System.out.println("4. 메모 삭제");
+		System.out.println("5. 뒤로가기");
 	}
 
 	private void setNewline() {

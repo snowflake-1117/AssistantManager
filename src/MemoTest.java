@@ -17,6 +17,19 @@ public class MemoTest {
 	}
 
 	@Test
+	public void updateMemoTest() {
+		mm.memoList.add("memo for updateMemoTest 1");
+		mm.memoList.add("memo for updateMemoTest 2");
+		mm.listMemo();
+
+		String[] updatedInfo = mm.updateMemo();
+		int updatedNode = Integer.parseInt(updatedInfo[0]);
+		String updated = updatedInfo[1];
+
+		assertEquals(updated, mm.memoList.get(updatedNode));
+	}
+
+	@Test
 	public void writeMemoFileTest() throws IOException {
 		mm.memoList.add("memo for writeMemoFileTest");
 		int lastNode = mm.memoList.size() - 1;
