@@ -82,7 +82,7 @@ public class AccountManager extends Menu {
 	private void insertRecord(int id) {
 		++ENDOFLIST;
 		Record record = getData();
-		insertToList(id, record);
+		insertAt(id, record);
 	}
 
 	private Record getData() {
@@ -99,7 +99,7 @@ public class AccountManager extends Menu {
 		return record;
 	}
 
-	protected Record insertToList(int id, Record record) {
+	protected Record insertAt(int id, Record record) {
 		collection.add(id, record);
 		return collection.get(id);
 	}
@@ -114,32 +114,41 @@ public class AccountManager extends Menu {
 	}
 
 	private void updateRecord() {
-		System.out.print("\n레코드 id:");
-		int id = scanner.nextInt() - 1;
-		scanner.nextLine();
-		deleteAt(id);
-		insertRecord(id);
-
+		int id = getId();
+		Record record = getData();
+		updateAt(id, record);
 	}
-
-	private int deleteRecord() {
+	
+	
+	private int getId() {
 		System.out.print("\n레코드 id:");
 		int id = scanner.nextInt() - 1;
 		scanner.nextLine();
+		
+		return id;
+	}
+	
+	protected Record getRecord (int id) {
+		return collection.get(id);
+	}
+	
+	public Record updateAt(int id, Record record) {
+		collection.set(id, record);
+		return collection.get(id);
+	}
+	
+	private int deleteRecord() {
+		int id = getId();
+		deleteAt(id);
+		return id;
+	}
+	
+	protected void deleteAt(int id) {
 		try {
-			deleteAt(id);
+			collection.remove(id);
 		} catch (Exception ex) {
 			System.out.println("해당 레코드는 존재하지 않습니다.");
 		}
-		return id;
-	}
-
-	protected void deleteAt(int id) {
-		collection.remove(id);
-	}
-
-	protected Record checkInsertedRecord(int id) {
-		return collection.get(id);
 	}
 
 	protected void tearDown() {
@@ -161,4 +170,6 @@ public class AccountManager extends Menu {
 		}
 
 	}
+
+
 }

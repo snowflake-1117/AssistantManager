@@ -5,35 +5,40 @@ import org.junit.Test;
 
 public class AccountTest {
 	AccountManager manager;
-
+	Record baseRecord, secondRecord;
 	@Before
 	public void setup() {
 		manager = new AccountManager();
 		manager.setup();
+
+		baseRecord = new Record("2015.12.25", "지지고 1단계", "3500");
+		secondRecord = new Record("2016.12.25", "지지고 2단계", "4000");
 	}
 
 	@Test
 	public void testCreateRecord() {
-		Record expected = new Record("2010.06.20", "아이스크림", "500");
-		Record received = manager.insertToList(AccountManager.ENDOFLIST, expected);
-
-		assertArrayEquals(expected.data, received.data);
+		Record receivedRecord = manager.insertAt(AccountManager.ENDOFLIST, baseRecord);
+		assertArrayEquals(baseRecord.data, receivedRecord.data);
 	}
 
 	@Test
 	public void testUpdateRecord() {
-		Record beforeValue = new Record("2015.12.25", "지지고 1단계", "3500");
-		Record changedValue = new Record("2017.12.25", "지지고 2단계/치즈", "4000");
-		Record received = update(AccountManager.ENDOFLIST, beforeValue, changedValue);
-
-		assertArrayEquals(changedValue.data, received.data);
+		manager.insertAt(AccountManager.ENDOFLIST,baseRecord);
+		Record result = manager.updateAt(AccountManager.ENDOFLIST, secondRecord);
+		
+		assertArrayEquals(secondRecord.data, result.data);
 	}
 
-	public Record update(int id, Record before, Record after) {
-		manager.insertToList(id, before);
-		manager.deleteAt(id);
-		Record record = manager.insertToList(id, after);
-		return record;
+	
+	@Test
+	public void testDeleteRecord() {
+		manager.insertAt(AccountManager.ENDOFLIST,baseRecord);
+		manager.insertAt(AccountManager.ENDOFLIST,secondRecord);
+		manager.deleteAt(AccountManager.ENDOFLIST);
+		
+		Record result = manager.getRecord(AccountManager.ENDOFLIST);
+		
+		assertArrayEquals(baseRecord.data, result.data);
 	}
 
 	@After
