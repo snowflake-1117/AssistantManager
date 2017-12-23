@@ -13,7 +13,7 @@ public class AccountManager extends Menu {
 	private Scanner scanner;
 	private Vector<Record> collection = new Vector<Record>();
 	protected static int ENDOFLIST = 0;
-	
+
 	@Override
 	public void showAndSelect() {
 		scanner = new Scanner(System.in);
@@ -34,11 +34,11 @@ public class AccountManager extends Menu {
 		int choice = -1;
 		while (choice != 5) {
 			printMenu();
-			
+
 			System.out.print("입력: ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
-			
+
 			switch (choice) {
 			case 1:
 				insertRecord(ENDOFLIST);
@@ -80,11 +80,11 @@ public class AccountManager extends Menu {
 	}
 
 	private void insertRecord(int id) {
-		++ ENDOFLIST;
+		++ENDOFLIST;
 		Record record = getData();
-		insertToList(id,record);
+		insertToList(id, record);
 	}
-	
+
 	private Record getData() {
 		System.out.print("\n날짜(yyyy.mm.dd):");
 		String date = scanner.nextLine();
@@ -95,51 +95,52 @@ public class AccountManager extends Menu {
 		System.out.print("가격:");
 		String price = scanner.nextLine();
 
-		Record record = new Record(date,name,price);
+		Record record = new Record(date, name, price);
 		return record;
 	}
-	
-	protected void insertToList(int id, Record record) {
-		collection.add(id,record);
+
+	protected Record insertToList(int id, Record record) {
+		collection.add(id, record);
+		return collection.get(id);
 	}
-	
+
 	private void printAccounts() {
 		Iterator<Record> iterator = collection.iterator();
 		int id = 1;
 		while (iterator.hasNext()) {
 			Record record = (Record) iterator.next();
-			System.out.println(String.format("%3s %3s %3s %3s", id++, record.data[0], record.data[1], record.data[2]));
+			System.out.println(String.format("%3s %3s %5s %3s", id++, record.data[0], record.data[1], record.data[2]));
 		}
 	}
 
 	private void updateRecord() {
-			System.out.print("\n레코드 id:");
-			int id = scanner.nextInt() - 1;
-			scanner.nextLine();
-			
-			deleteAt(id);
-			insertRecord(id);
-	}
-	
-	private int deleteRecord() {
 		System.out.print("\n레코드 id:");
 		int id = scanner.nextInt() - 1;
 		scanner.nextLine();
 		deleteAt(id);
-		return id;
+		insertRecord(id);
+
 	}
-	
-	protected void deleteAt(int id) {
+
+	private int deleteRecord() {
+		System.out.print("\n레코드 id:");
+		int id = scanner.nextInt() - 1;
+		scanner.nextLine();
 		try {
-			collection.remove(id);
+			deleteAt(id);
 		} catch (Exception ex) {
 			System.out.println("해당 레코드는 존재하지 않습니다.");
 		}
+		return id;
 	}
-	
-	protected Record checkInsertedRecord(int id){
+
+	protected void deleteAt(int id) {
+		collection.remove(id);
+	}
+
+	protected Record checkInsertedRecord(int id) {
 		return collection.get(id);
-	} 
+	}
 
 	protected void tearDown() {
 		FileOutputStream fileOutputStream;

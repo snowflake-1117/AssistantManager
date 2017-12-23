@@ -1,52 +1,48 @@
 import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class AccountTest {
 	AccountManager manager;
-	
+
 	@Before
 	public void setup() {
 		manager = new AccountManager();
 		manager.setup();
 	}
-	
+
 	@Test
 	public void testCreateRecord() {
-		Record expected = new Record("2010.06.20","아이스크림","500"); 
-		manager.insertToList(AccountManager.ENDOFLIST, expected);
-		
-		Record received = manager.checkInsertedRecord(AccountManager.ENDOFLIST);
+		Record expected = new Record("2010.06.20", "아이스크림", "500");
+		Record received = manager.insertToList(AccountManager.ENDOFLIST, expected);
+
 		assertArrayEquals(expected.data, received.data);
 	}
-	
+
 	@Test
 	public void testUpdateRecord() {
-		Record beforeValue = new Record("2015.12.25", "지지고","3500"); 
-		Record changedValue = new Record("2017.12.25","칠면조 요리","350000"); 
-		
-		update(AccountManager.ENDOFLIST,beforeValue, changedValue);
-		
-		Record received = manager.checkInsertedRecord(AccountManager.ENDOFLIST);
+		Record beforeValue = new Record("2015.12.25", "지지고 1단계", "3500");
+		Record changedValue = new Record("2017.12.25", "지지고 2단계/치즈", "4000");
+		Record received = update(AccountManager.ENDOFLIST, beforeValue, changedValue);
+
 		assertArrayEquals(changedValue.data, received.data);
 	}
-	
-	public void update(int id,Record before, Record after) {
-		manager.insertToList(AccountManager.ENDOFLIST, before);
+
+	public Record update(int id, Record before, Record after) {
+		manager.insertToList(id, before);
 		manager.deleteAt(id);
-		manager.insertToList(id, after);
-	} 
-	
-	@Test
-	public void testDeleteRecord () {
-		manager.deleteAt(AccountManager.ENDOFLIST);
-	} 
-	
+		Record record = manager.insertToList(id, after);
+		return record;
+	}
+
 	@After
 	public void tearDown() {
-		manager.tearDown();
+		try {
+			manager.deleteAt(AccountManager.ENDOFLIST);
+			manager.tearDown();
+		} catch (Exception ex) {
+		}
 	}
-	
+
 }
