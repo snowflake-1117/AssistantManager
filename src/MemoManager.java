@@ -17,7 +17,7 @@ public class MemoManager extends Menu {
 
 		do {
 			printMenu();
-			System.out.print("ÀÔ·Â: ");
+			System.out.print("ì…ë ¥: ");
 			n = scan.nextInt();
 
 			switch (n) {
@@ -33,8 +33,10 @@ public class MemoManager extends Menu {
 			case 4:
 				deleteMemo();
 				break;
+			case 5:
+				break;
 			default:
-				System.out.println("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.");
+				System.out.println("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤.");
 			}
 		} while (n != 5);
 
@@ -68,13 +70,13 @@ public class MemoManager extends Menu {
 				printWriter.println(memoList.get(i));
 			printWriter.close();
 		} catch (Exception e) {
-			System.out.println("ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù");
+			System.out.println("íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 		}
 	}
 
 	protected String addMemo() {
 		Scanner scan = new Scanner(System.in);
-		System.out.print("¸Ş¸ğ Ãß°¡: ");
+		System.out.print("ë©”ëª¨ ì¶”ê°€: ");
 		String memo = scan.nextLine();
 		memoList.add(memo);
 		isModified = true;
@@ -90,25 +92,31 @@ public class MemoManager extends Menu {
 		setNewline();
 	}
 
-	private void updateMemo() {
+	protected String[] updateMemo() {
+		String updateInfo[] = {"", ""};
 		if (checkEmptyList())
-			return;
+			return updateInfo;
+		
 		Scanner scan = new Scanner(System.in);
-		System.out.print("¼öÁ¤ÇÒ ¸Ş¸ğÀÇ ¹øÈ£: ");
+		System.out.print("ìˆ˜ì •í•  ë©”ëª¨ì˜ ë²ˆí˜¸: ");
 		int id = scan.nextInt() - 1;
-		scan.nextLine(); //¹öÆÛ ºñ¿ò
-		System.out.print("¼öÁ¤ÇÒ ³»¿ë: ");
+		updateInfo[0] = Integer.toString(id);
+		scan.nextLine(); //ë²„í¼ ë¹„ì›€
+		
+		System.out.print("ìˆ˜ì •í•  ë‚´ìš©: ");
 		String content = scan.nextLine();
 		memoList.set(id, content);
+		updateInfo[1] = content;
 		isModified = true;
 		setNewline();
+		return updateInfo;
 	}
 
 	private void deleteMemo() {
 		if (checkEmptyList())
 			return;
 		Scanner scan = new Scanner(System.in);
-		System.out.print("»èÁ¦ÇÒ ¸Ş¸ğÀÇ ¹øÈ£: ");
+		System.out.print("ì‚­ì œí•  ë©”ëª¨ì˜ ë²ˆí˜¸: ");
 		int id = scan.nextInt() - 1;
 		memoList.remove(id);
 		isModified = true;
@@ -117,18 +125,18 @@ public class MemoManager extends Menu {
 
 	private boolean checkEmptyList() {
 		if (memoList.size() < 1) {
-			System.out.println("¸Ş¸ğÀåÀÌ ºñ¾î ÀÖ½À´Ï´Ù");
+			System.out.println("ë©”ëª¨ì¥ì´ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤");
 			return true;
 		}
 		return false;
 	}
 
 	protected void printMenu() {
-		System.out.println("1. ¸Ş¸ğ Ãß°¡");
-		System.out.println("2. ¸Ş¸ğ ¸®½ºÆ®");
-		System.out.println("3. ¸Ş¸ğ ¼öÁ¤");
-		System.out.println("4. ¸Ş¸ğ »èÁ¦");
-		System.out.println("5. µÚ·Î°¡±â");
+		System.out.println("1. ë©”ëª¨ ì¶”ê°€");
+		System.out.println("2. ë©”ëª¨ ë¦¬ìŠ¤íŠ¸");
+		System.out.println("3. ë©”ëª¨ ìˆ˜ì •");
+		System.out.println("4. ë©”ëª¨ ì‚­ì œ");
+		System.out.println("5. ë’¤ë¡œê°€ê¸°");
 	}
 
 	private void setNewline() {
