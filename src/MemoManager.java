@@ -84,7 +84,7 @@ public class MemoManager extends Menu {
 		return memo;
 	}
 
-	private void listMemo() {
+	protected void listMemo() {
 		if (checkEmptyList())
 			return;
 		for (int i = 0; i < memoList.size(); i++)
@@ -107,6 +107,7 @@ public class MemoManager extends Menu {
 		String content = scan.nextLine();
 		memoList.set(id, content);
 		updateInfo[1] = content;
+		
 		isModified = true;
 		setNewline();
 		return updateInfo;
