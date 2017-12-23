@@ -11,7 +11,7 @@ public class MemoTest {
 
 	@Test
 	public void addMemoTest() {
-		String addedMemo = mm.addMemo();
+		String addedMemo = mm.addMemo("memo for addMemoTest");
 		int lastNode = mm.memoList.size() - 1;
 		assertEquals(addedMemo, mm.memoList.get(lastNode));
 	}

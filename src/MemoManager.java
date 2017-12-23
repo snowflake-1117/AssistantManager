@@ -22,7 +22,8 @@ public class MemoManager extends Menu {
 
 			switch (n) {
 			case 1:
-				addMemo();
+				String newMemo = getMemo();
+				addMemo(newMemo);
 				break;
 			case 2:
 				listMemo();
@@ -74,13 +75,17 @@ public class MemoManager extends Menu {
 		}
 	}
 
-	protected String addMemo() {
-		Scanner scan = new Scanner(System.in);
-		System.out.print("메모 추가: ");
-		String memo = scan.nextLine();
+	protected String addMemo(String memo) {
 		memoList.add(memo);
 		isModified = true;
 		setNewline();
+		return memo;
+	}
+	
+	private String getMemo() {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("메모 추가: ");
+		String memo = scan.nextLine();	
 		return memo;
 	}
 
