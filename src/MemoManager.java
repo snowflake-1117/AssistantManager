@@ -100,6 +100,11 @@ public class MemoManager extends Menu {
 		Scanner scan = new Scanner(System.in);
 		System.out.print("수정할 메모의 번호: ");
 		int id = scan.nextInt() - 1;
+		if (id<0 || id>=memoList.size()) {
+			System.out.println("없는 번호입니다.");
+			return updateInfo;
+		}
+		
 		updateInfo[0] = Integer.toString(id);
 		scan.nextLine(); //버퍼 비움
 		
@@ -116,9 +121,15 @@ public class MemoManager extends Menu {
 	private void deleteMemo() {
 		if (checkEmptyList())
 			return;
+		
 		Scanner scan = new Scanner(System.in);
 		System.out.print("삭제할 메모의 번호: ");
 		int id = scan.nextInt() - 1;
+		if (id<0 || id>=memoList.size()) {
+			System.out.println("없는 번호입니다.");
+			return;
+		}
+
 		memoList.remove(id);
 		isModified = true;
 		setNewline();
