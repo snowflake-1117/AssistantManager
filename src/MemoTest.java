@@ -29,7 +29,7 @@ public class MemoTest {
 	}
 
 	private String getFileLastLine() throws IOException {
-		BufferedReader bufferedReader = new BufferedReader(new FileReader("MemoManager.txt"));
+		BufferedReader bufferedReader = new BufferedReader(new FileReader("memoManager.txt"));
 		String readLine = "", line;
 		while (true) {
 			line = bufferedReader.readLine();
