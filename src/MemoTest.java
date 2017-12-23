@@ -11,7 +11,7 @@ public class MemoTest {
 
 	@Test
 	public void addMemoTest() {
-		String addedMemo = mm.addMemo();
+		String addedMemo = mm.addMemo("memo for addMemoTest");
 		int lastNode = mm.memoList.size() - 1;
 		assertEquals(addedMemo, mm.memoList.get(lastNode));
 	}
@@ -29,7 +29,7 @@ public class MemoTest {
 	}
 
 	private String getFileLastLine() throws IOException {
-		BufferedReader bufferedReader = new BufferedReader(new FileReader("MemoManager.txt"));
+		BufferedReader bufferedReader = new BufferedReader(new FileReader("memoManager.txt"));
 		String readLine = "", line;
 		while (true) {
 			line = bufferedReader.readLine();
