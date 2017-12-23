@@ -84,39 +84,40 @@ public class MemoManager extends Menu {
 		return memo;
 	}
 
-	protected void listMemo() {
-		if (checkEmptyList())
+	private void listMemo() {
+		if (isEmptyList())
 			return;
+		
 		for (int i = 0; i < memoList.size(); i++)
 			System.out.println("[" + (i + 1) + "] " + memoList.get(i));
 		setNewline();
 	}
 
 	protected void updateMemo() {
-		if (checkEmptyList())
+		if (isEmptyList())
 			return;
-		
+
 		Scanner scan = new Scanner(System.in);
-		System.out.print("수정할 메모의 번호: ");
+		System.out.print("수정할 메모 번호: ");
 		int id = scan.nextInt() - 1;
 		if (isInvalidId(id))
 			return;
-		
-		scan.nextLine(); //버퍼 비움
-		
+
+		scan.nextLine(); // 버퍼 비움
+
 		System.out.print("수정할 내용: ");
 		String content = scan.nextLine();
 		memoList.set(id, content);
-		
+
 		isModified = true;
 		setNewline();
 		return;
 	}
 
 	private void deleteMemo() {
-		if (checkEmptyList())
+		if (isEmptyList())
 			return;
-		
+
 		Scanner scan = new Scanner(System.in);
 		System.out.print("삭제할 메모의 번호: ");
 		int id = scan.nextInt() - 1;
@@ -128,20 +129,20 @@ public class MemoManager extends Menu {
 		setNewline();
 	}
 
-	private boolean checkEmptyList() {
+	private boolean isEmptyList() {
 		if (memoList.size() < 1) {
 			System.out.println("메모장이 비어 있습니다");
 			return true;
 		}
 		return false;
 	}
-	
+
 	private boolean isInvalidId(int id) {
 		if (id < 0 || id >= memoList.size()) {
 			System.out.println("없는 번호입니다.");
 			setNewline();
 			return true;
-		}
+		} 
 		else
 			return false;
 	}
