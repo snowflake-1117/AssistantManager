@@ -15,29 +15,34 @@ public class AccountTest {
 	
 	@Test
 	public void testCreateRecord() {
+		Record expected = new Record("2010.06.20","아이스크림","500"); 
+		manager.insertToList(AccountManager.ENDOFLIST, expected);
 		
-		String date = "2010.06.20";
-		String name = "아이스크림";
-		String price = "500";
-		
-		Record expected = new Record(date,name,price); 
-		manager.insertToList(AccountManager.ENDOFLIST, date,name,price);
 		Record received = manager.checkInsertedRecord(AccountManager.ENDOFLIST);
 		assertArrayEquals(expected.data, received.data);
 	}
 	
 	@Test
 	public void testUpdateRecord() {
-		String date = "2017.12.25";
-		String name = "아이스크림 케익";
-		String price = "34500";
+		Record beforeValue = new Record("2015.12.25", "지지고","3500"); 
+		Record changedValue = new Record("2017.12.25","칠면조 요리","350000"); 
 		
-		Record expected = new Record(date,name,price); 
-		manager.deleteAt(AccountManager.ENDOFLIST);
-		manager.insertToList(AccountManager.ENDOFLIST, date,name,price);
+		update(AccountManager.ENDOFLIST,beforeValue, changedValue);
+		
 		Record received = manager.checkInsertedRecord(AccountManager.ENDOFLIST);
-		assertArrayEquals(expected.data, received.data);
+		assertArrayEquals(changedValue.data, received.data);
 	}
+	
+	public void update(int id,Record before, Record after) {
+		manager.insertToList(AccountManager.ENDOFLIST, before);
+		manager.deleteAt(id);
+		manager.insertToList(id, after);
+	} 
+	
+	@Test
+	public void testDeleteRecord () {
+		manager.deleteAt(AccountManager.ENDOFLIST);
+	} 
 	
 	@After
 	public void tearDown() {

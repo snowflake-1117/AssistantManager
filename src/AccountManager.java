@@ -41,7 +41,7 @@ public class AccountManager extends Menu {
 			
 			switch (choice) {
 			case 1:
-				insertRecordAt(ENDOFLIST);
+				insertRecord(ENDOFLIST);
 				break;
 			case 2:
 				printAccounts();
@@ -79,8 +79,13 @@ public class AccountManager extends Menu {
 		ENDOFLIST = collection.size();
 	}
 
-	private void insertRecordAt(int id) {
+	private void insertRecord(int id) {
 		++ ENDOFLIST;
+		Record record = getData();
+		insertToList(id,record);
+	}
+	
+	private Record getData() {
 		System.out.print("\n날짜(yyyy.mm.dd):");
 		String date = scanner.nextLine();
 		if (!date.matches("^\\d{4}.\\d{2}.\\d{2}"))
@@ -89,17 +94,16 @@ public class AccountManager extends Menu {
 		String name = scanner.nextLine();
 		System.out.print("가격:");
 		String price = scanner.nextLine();
-		
-		insertToList(id,  date, name, price);
+
+		Record record = new Record(date,name,price);
+		return record;
 	}
 	
-	protected void insertToList(int id, String date, String name, String price) {
-		Record record = new Record(date,name,price);
+	protected void insertToList(int id, Record record) {
 		collection.add(id,record);
 	}
 	
 	private void printAccounts() {
-		
 		Iterator<Record> iterator = collection.iterator();
 		int id = 1;
 		while (iterator.hasNext()) {
@@ -109,10 +113,14 @@ public class AccountManager extends Menu {
 	}
 
 	private void updateRecord() {
-			int id = deleteRecord();
-			insertRecordAt(id);
+			System.out.print("\n레코드 id:");
+			int id = scanner.nextInt() - 1;
+			scanner.nextLine();
+			
+			deleteAt(id);
+			insertRecord(id);
 	}
-
+	
 	private int deleteRecord() {
 		System.out.print("\n레코드 id:");
 		int id = scanner.nextInt() - 1;
